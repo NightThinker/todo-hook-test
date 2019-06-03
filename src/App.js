@@ -21,6 +21,8 @@ const initialTodoList = [
 function App() {
   const [todo, setTodo] = useState('')
   const [todoList, setTodoList] = useState(initialTodoList)
+  const [editing, setEditing] = useState(false)
+  const [todoIndex, setTodoIndex] = useState(null)
 
   function handlerInputChange(event) {
     setTodo(event.target.value)
@@ -28,12 +30,27 @@ function App() {
 
   function handlerSubmit(event) {
     event.preventDefault()
-    setTodoList([...todoList, todo])
+    if(editing) {
+      const newTodoList = todoList
+      newTodoList[todoIndex] = todo
+      setTodoList(newTodoList)
+      setTodo('')
+      setEditing(false)
+    } else {
+      setTodoList([...todoList, todo])
+    }
   }
 
   function handlerRemove(todoIndex) {
     const newTodoList = todoList.filter((item, i) => i !== todoIndex)
     setTodoList(newTodoList)
+  }
+
+  function handlerEdit(Index) {
+    setEditing(true)
+    const newTodoList = todoList
+    setTodo(newTodoList[Index])
+    setTodoIndex(Index)
   }
   
   return (
@@ -42,7 +59,7 @@ function App() {
       <Form onSubmit={handlerSubmit}>
         <InputGroup>
           <Input value={todo} onChange={handlerInputChange} />
-          <Button>Add</Button>
+          <Button>{editing ? 'Edit' : 'Add'}</Button>
         </InputGroup>
       </Form>
       <ListGroup>
@@ -51,7 +68,7 @@ function App() {
           <ListGroupItem key={i}>
             {item}
             <div style={{ float: 'right'}}>
-              <FaEdit className='icons' />
+              <FaEdit className='icons'  onClick={() => handlerEdit(i)} />
               <FaTrashAlt className='icons' onClick={() => handlerRemove(i)}/>
             </div>
           </ListGroupItem>
