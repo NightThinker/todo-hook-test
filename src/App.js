@@ -1,4 +1,6 @@
 import React, { useState } from 'react';
+import { FaEdit, FaTrashAlt } from 'react-icons/fa';
+import './app.css'
 
 import 'bootstrap/dist/css/bootstrap.css';
 import {
@@ -40,7 +42,15 @@ function App() {
       </Form>
       <ListGroup>
         {todoList.map((item, i) => {
-          return <ListGroupItem key={i}>{item}</ListGroupItem>;
+          return (
+          <ListGroupItem key={i}>
+            {item}
+            <div style={{ float: 'right'}}>
+              <FaEdit className='icons' />
+              <FaTrashAlt className='icons'/>
+            </div>
+          </ListGroupItem>
+          );
         })}
       </ListGroup>
     </section>
