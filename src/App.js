@@ -30,6 +30,11 @@ function App() {
     event.preventDefault()
     setTodoList([...todoList, todo])
   }
+
+  function handlerRemove(todoIndex) {
+    const newTodoList = todoList.filter((item, i) => i !== todoIndex)
+    setTodoList(newTodoList)
+  }
   
   return (
     <section>
@@ -47,7 +52,7 @@ function App() {
             {item}
             <div style={{ float: 'right'}}>
               <FaEdit className='icons' />
-              <FaTrashAlt className='icons'/>
+              <FaTrashAlt className='icons' onClick={() => handlerRemove(i)}/>
             </div>
           </ListGroupItem>
           );
