@@ -1,7 +1,7 @@
-import React, { useState } from 'react';
+import React from 'react';
 import { FaEdit, FaTrashAlt } from 'react-icons/fa';
-import './app.css'
 
+import './app.css'
 import 'bootstrap/dist/css/bootstrap.css';
 import {
   ListGroup,
@@ -11,47 +11,19 @@ import {
   Input,
   InputGroup
 } from "reactstrap";
+import useTodo from './hooks/useTodo'
 
-const initialTodoList = [
-  "Teach Intro to React Hooks",
-  "Get coffee",
-  "Fix all the bugs"
-];
+
 
 function App() {
-  const [todo, setTodo] = useState('')
-  const [todoList, setTodoList] = useState(initialTodoList)
-  const [editing, setEditing] = useState(false)
-  const [todoIndex, setTodoIndex] = useState(null)
-
-  function handlerInputChange(event) {
-    setTodo(event.target.value)
-  }
-
-  function handlerSubmit(event) {
-    event.preventDefault()
-    if(editing) {
-      const newTodoList = todoList
-      newTodoList[todoIndex] = todo
-      setTodoList(newTodoList)
-      setTodo('')
-      setEditing(false)
-    } else {
-      setTodoList([...todoList, todo])
-    }
-  }
-
-  function handlerRemove(todoIndex) {
-    const newTodoList = todoList.filter((item, i) => i !== todoIndex)
-    setTodoList(newTodoList)
-  }
-
-  function handlerEdit(Index) {
-    setEditing(true)
-    const newTodoList = todoList
-    setTodo(newTodoList[Index])
-    setTodoIndex(Index)
-  }
+  const { todo,
+    todoList,
+    editing,
+    handlerInputChange,
+    handlerSubmit,
+    handlerRemove,
+    handlerEdit } = useTodo()
+ 
   
   return (
     <section>
