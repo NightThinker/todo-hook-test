@@ -18,22 +18,28 @@ const initialTodoList = [
 
 function App() {
   const [todo, setTodo] = useState('')
+  const [todoList, setTodoList] = useState(initialTodoList)
 
   function handlerInputChange(event) {
     setTodo(event.target.value)
+  }
+
+  function handlerSubmit(event) {
+    event.preventDefault()
+    setTodoList([...todoList, todo])
   }
   
   return (
     <section>
       <h1>TODO</h1>
-      <Form>
+      <Form onSubmit={handlerSubmit}>
         <InputGroup>
           <Input value={todo} onChange={handlerInputChange} />
           <Button>Add</Button>
         </InputGroup>
       </Form>
       <ListGroup>
-        {initialTodoList.map((item, i) => {
+        {todoList.map((item, i) => {
           return <ListGroupItem key={i}>{item}</ListGroupItem>;
         })}
       </ListGroup>
